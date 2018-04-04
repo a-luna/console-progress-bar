@@ -47,9 +47,29 @@ await TestProgressBar(pb3);
 ```csharp
 var pb4 = new ConsoleProgressBar
 {
-    DisplayBar = false,
+    DisplayBar = false, // Progress bar is not displayed
     AnimationSequence = ProgressAnimations.RotatingArrow
 };
 await TestProgressBar(pb4);
 ```
 ![Console Progress Bar Custom-3](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ConsoleProgressBar-4.gif)
+```csharp
+// Test method used in above examples
+static async Task TestProgressBar(ConsoleProgressBar progress)
+{
+    Console.Write("Performing some task... ");
+    using (progress)
+    {
+        for (int i = 0; i <= 100; i++)
+        {
+            progress.Report((double)i / 100);
+            await Task.Delay(50);
+        }
+
+        progress.Report(1);
+        await Task.Delay(100);
+    }
+
+    Console.WriteLine("Done.");
+}
+```
