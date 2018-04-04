@@ -13,9 +13,43 @@ A simple way to represent the progress of a long-running job in a C# console app
   
 ## Usage
 ### ConsoleProgressBar
-Default behavior:
 ```csharp
-var pb1 = new ConsoleProgressBar();
+var pb1 = new ConsoleProgressBar(); // Default behavior
 await TestProgressBar(pb1);
 ```
 ![Console Progress Bar Default Behavior](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ConsoleProgressBar-1.gif)
+```csharp
+var pb2 = new ConsoleProgressBar
+{   
+    // Customized all parts of the progress bar
+    NumberOfBlocks = 13,
+    StartBracket = "|",
+    EndBracket = "|",
+    CompletedBlock = "|",
+    IncompleteBlock = "\u00a0",
+    AnimationSequence = ProgressAnimations.GrowingBarVertical
+};
+await TestProgressBar(pb2);
+```
+![Console Progress Bar Custom-1](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ConsoleProgressBar-2.gif)
+```csharp
+var pb3 = new ConsoleProgressBar
+{
+    StartBracket = string.Empty,
+    EndBracket = string.Empty,
+    CompletedBlock = "\u00bb",
+    IncompleteBlock = "-",
+    DisplayAnimation = false      // Animation is not displayed
+};
+await TestProgressBar(pb3);
+```
+![Console Progress Bar Custom-2](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ConsoleProgressBar-3.gif)
+```csharp
+var pb4 = new ConsoleProgressBar
+{
+    DisplayBar = false,
+    AnimationSequence = ProgressAnimations.RotatingArrow
+};
+await TestProgressBar(pb4);
+```
+![Console Progress Bar Custom-3](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ConsoleProgressBar-4.gif)
