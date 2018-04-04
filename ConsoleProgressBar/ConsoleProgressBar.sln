@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProgressBar", "ConsoleProgressBar.csproj", "{10E76E01-70A5-431E-AD39-D7580CDCF649}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "..\TestConsole\TestConsole.csproj", "{B434A0F1-6683-4991-90C9-AD8B85A22052}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10E76E01-70A5-431E-AD39-D7580CDCF649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10E76E01-70A5-431E-AD39-D7580CDCF649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10E76E01-70A5-431E-AD39-D7580CDCF649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10E76E01-70A5-431E-AD39-D7580CDCF649}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B434A0F1-6683-4991-90C9-AD8B85A22052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B434A0F1-6683-4991-90C9-AD8B85A22052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B434A0F1-6683-4991-90C9-AD8B85A22052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B434A0F1-6683-4991-90C9-AD8B85A22052}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
