@@ -1,2 +1,4 @@
-# console-progress-bar
-.Net Core 2.0 thread-safe progress bar for console applications that allows the user to customize the appearence in multiple ways. There is a basic progress bar which can be used for any long-running task and a file transfer progress bar that detects when transfer has stalled, firing an event that the client can subscribe to.
+# Console Progress Bar for C# .Net Core 2.0
+This repository contains 2 projects:
+ConsoleProgressBar: Class library containing ConsoleProgressBar and FileTransferProgressBar classes.
+TestConsole: .Net Core console application which demonstrate usage of both progress bars.
