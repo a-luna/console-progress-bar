@@ -14,6 +14,23 @@ A simple way to represent the progress of a long-running job in a C# console app
 ## Usage
 ### FileTransferProgressBar
 ```csharp
+// Progress bar is setup to trigger FileTransferStalled after 2 seconds of inactivity
+var pb4 = new FileTransferProgressBar((long)fileSize, TimeSpan.FromSeconds(2))
+{
+	NumberOfBlocks = 10,
+	StartBracket = "{",
+	EndBracket = "}",
+	CompletedBlock = "-",
+	IncompleteBlock = "\u00a0",
+	DisplayLastRxTime = true,
+	DisplayAnimation = false
+};
+pb4.FileTransferStalled += HandleFileTransferStalled;
+
+await TestFileTransferStalled(pb4);
+```
+![File Transfer Progress Bar-4](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/FileTransferProgressBar-4.gif)
+```csharp
 var pb1 = new FileTransferProgressBar((long)fileSize, TimeSpan.FromSeconds(10))
 {
     NumberOfBlocks = 10,
@@ -58,23 +75,7 @@ await TestFileTransferProgressBar(pb2);
  await TestFileTransferProgressBar(pb3);
 ```
 ![File Transfer Progress Bar-3](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/FileTransferProgressBar-3.gif)
-```csharp
-// Progress bar is setup to trigger FileTransferStalled after 2 seconds of inactivity
-var pb4 = new FileTransferProgressBar((long)fileSize, TimeSpan.FromSeconds(2))
-{
-	NumberOfBlocks = 10,
-	StartBracket = "{",
-	EndBracket = "}",
-	CompletedBlock = "-",
-	IncompleteBlock = "\u00a0",
-	DisplayLastRxTime = true,
-	DisplayAnimation = false
-};
-pb4.FileTransferStalled += HandleFileTransferStalled;
 
-await TestFileTransferStalled(pb4);
-```
-![File Transfer Progress Bar-4](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/FileTransferProgressBar-4.gif)
 ### ConsoleProgressBar
 ```csharp
 var pb1 = new ConsoleProgressBar(); // Default behavior
