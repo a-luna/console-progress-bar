@@ -57,26 +57,33 @@
             var remainingTicks = timeSpan.Ticks - (timeSpan.Seconds * 10_000_000);
             var milliseconds = remainingTicks / 10_000;
 
-			if (milliseconds <= 0)
-            {
-                s += "\u00a0\u00a00ms";
-            }
+			if (timeSpan.Seconds > 0)
+			{
+				s += $"{milliseconds}ms";
+			}
+            else
+			{
+				if (milliseconds <= 0)
+                {
+                    s += "\u00a0\u00a00ms";
+                }
 
-            if (milliseconds > 0)
-            {
-				if (milliseconds < 100)
-				{
-					s += $"\u00a0{milliseconds}ms";
-				}
-				else if (milliseconds < 10)
-				{
-					s += $"\u00a0\u00a0{milliseconds}ms";
-				}
-				else
-				{
-					s += $"{milliseconds}ms";
-				}
-            }
+                if (milliseconds > 0)
+                {
+                    if (milliseconds < 100)
+                    {
+                        s += $"\u00a0{milliseconds}ms";
+                    }
+                    else if (milliseconds < 10)
+                    {
+                        s += $"\u00a0\u00a0{milliseconds}ms";
+                    }
+                    else
+                    {
+                        s += $"{milliseconds}ms";
+                    }
+                }
+			}
 
             return s;
         }
