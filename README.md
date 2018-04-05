@@ -4,7 +4,7 @@ A simple way to represent the progress of a long-running job in a C# console app
 ## Features
 - **ConsoleProgressBar**
   - **Implements `IProgress<double>`** The `IProgress` interface greatly simplifies the effort to report progress from an `async` method to the UI, clunky boilerplate code to ensure thread-safety is not required since the `SynchronizationContext` is captured when the progress bar is instantiated.
-  - **Efficient and light-weight** `Console` can easily become sluggish and unresponsive when called frequently, this progress bar only performs 8 calls/second regardless of how often progress is reported.
+  - **Efficient and light-weight** `Console` can become sluggish and unresponsive when called frequently, this progress bar only performs 8 calls/second regardless of how often progress is reported.
   - **Customizable** Each component of the progress bar (start/end brackets, completed/incomplete blocks, progress animation) can be set to any string value through public properties and each item displayed (the progress bar itself, percentage complete, animation) can be shown or hidden.
 
 - **FileTransferProgressBar**
