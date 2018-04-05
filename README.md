@@ -14,39 +14,36 @@ A simple way to represent the progress of a long-running job in a C# console app
 ## Usage
 ### FileTransferProgressBar
 ```csharp
-var fileSize1 = 100 * 48 * FileHelper.OneMB;
-var pb1 = new FileTransferProgressBar((long)fileSize1, TimeSpan.FromSeconds(10))
+var pb1 = new FileTransferProgressBar((long)fileSize, TimeSpan.FromSeconds(10))
 {
     NumberOfBlocks = 10,
     StartBracket = "|",
     EndBracket = "|",
     CompletedBlock = "|",
     IncompleteBlock = "\u00a0",
-    DisplayLastRxTime = false,
+    DisplayLastRxTime = false,	// Time since last progress reported not displayed
     AnimationSequence = ProgressAnimations.RotatingCircle
 };
 await TestFileTransferProgressBar(pb1);
 ```
 ![File Transfer Progress Bar-1](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/FileTransferProgressBar-1.gif)
 ```csharp
-var fileSize2 = 100 * 81 * FileHelper.OneKB;
-var pb2 = new FileTransferProgressBar((long)fileSize2, TimeSpan.FromSeconds(10))
+var pb2 = new FileTransferProgressBar((long)fileSize, TimeSpan.FromSeconds(10))
 {
     NumberOfBlocks = 20,
     StartBracket = string.Empty,
     EndBracket = string.Empty,
     CompletedBlock = "\u00bb",
     IncompleteBlock = "\u00a0",
-    DisplayLastRxTime = false,
-    DisplayBytes = false,
+    DisplayLastRxTime = false,	// Time since last progress reported not displayed
+    DisplayBytes = false,	// Bytes received/total bytes not displayed
     AnimationSequence = ProgressAnimations.BouncingBall
 };
 await TestFileTransferProgressBar(pb2);
 ```
 ![File Transfer Progress Bar-2](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/FileTransferProgressBar-2.gif)
 ```csharp
- var fileSize3 = 100 * 59 * 1024;
- var pb3 = new FileTransferProgressBar((long)fileSize3, TimeSpan.FromSeconds(10))
+ var pb3 = new FileTransferProgressBar((long)fileSize, TimeSpan.FromSeconds(10))
  {
      NumberOfBlocks = 15,
      StartBracket = "\u00a0",
@@ -54,7 +51,7 @@ await TestFileTransferProgressBar(pb2);
      CompletedBlock = "=",
      IncompleteBlock = "-",
      DisplayLastRxTime = true,
-     DisplayPercentComplete = false,
+     DisplayPercentComplete = false,	// Percent complete not displayed
      DisplayBytes = false,
      AnimationSequence = ProgressAnimations.RotatingPipe
  };
@@ -62,8 +59,8 @@ await TestFileTransferProgressBar(pb2);
 ```
 ![File Transfer Progress Bar-3](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/FileTransferProgressBar-3.gif)
 ```csharp
-var fileSize4 = 100 * 36 * FileHelper.OneKB;
-var pb4 = new FileTransferProgressBar((long)fileSize4, TimeSpan.FromSeconds(2))
+// Progress bar is setup to trigger FileTransferStalled after 2 seconds of inactivity
+var pb4 = new FileTransferProgressBar((long)fileSize, TimeSpan.FromSeconds(2))
 {
 	NumberOfBlocks = 10,
 	StartBracket = "{",
