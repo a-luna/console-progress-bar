@@ -1,22 +1,23 @@
-﻿namespace AaronLuna.Common.Console
+﻿namespace AaronLuna.ConsoleProgressBar
 {
 	using System;
     using System.Linq;
     using System.Threading;
-    using AaronLuna.Common.Extensions;
-    using AaronLuna.Common.IO;
+
+	using Common.Extensions;
+    using Common.IO;
 
 	public class FileTransferProgressBar : ConsoleProgressBar
     {
 		long _lastReportTicks;
 
-		public FileTransferProgressBar(long fileSizeInBytes, TimeSpan timeout) : base()
+		public FileTransferProgressBar(long fileSizeInBytes, TimeSpan timeout)
 		{
 			_lastReportTicks = DateTime.Now.Ticks;
 
 			FileSizeInBytes = fileSizeInBytes;
 			BytesReceived = 0;
-			FileStalledInterval = timeout;
+			TimeSpanFileStalled = timeout;
             DisplayBytes = true;
             DisplayLastRxTime = false;
 
@@ -33,7 +34,7 @@
 
 		public long FileSizeInBytes { get; set; }
 		public long BytesReceived { get; set; }
-		public TimeSpan FileStalledInterval { get; set; }
+		public TimeSpan TimeSpanFileStalled { get; set; }
 		public bool DisplayBytes { get; set; }
         public bool DisplayLastRxTime { get; set; }
 
@@ -60,7 +61,7 @@
                 UpdateText(GetProgressBarText(CurrentProgress, elapsedTicks));
                 ResetTimer();
 
-                if (elapsed < FileStalledInterval) return;
+                if (elapsed < TimeSpanFileStalled) return;
 
                 FileTransferStalled?.Invoke(this,
                     new ProgressEventArgs
@@ -74,44 +75,34 @@
 		string GetProgressBarText(double currentProgress, long elapsedTicks)
         {
             var numBlocksCompleted = (int)(currentProgress * NumberOfBlocks);
-            var completedBlocks = string.Empty;
-            foreach (var i in Enumerable.Range(0, numBlocksCompleted))
-            {
-                completedBlocks += CompletedBlock;
-            }
 
-            var uncompletedBlocks = string.Empty;
-            foreach (var i in Enumerable.Range(0, NumberOfBlocks - numBlocksCompleted))
-            {
-                uncompletedBlocks += IncompleteBlock;
-            }
+            var completedBlocks =
+                Enumerable.Range(0, numBlocksCompleted).Aggregate(
+                    string.Empty,
+                    (current, _) => current + CompletedBlock);
 
-            var progressBar = $"{StartBracket}{completedBlocks}{uncompletedBlocks}{EndBracket} ";
-            var percent = $" {(int)(currentProgress * 100)}% ";
+            var incompleteBlocks =
+                Enumerable.Range(0, NumberOfBlocks - numBlocksCompleted).Aggregate(
+                    string.Empty,
+                    (current, _) => current + IncompleteBlock);
+
+            var progressBar = $"{StartBracket}{completedBlocks}{incompleteBlocks}{EndBracket} ";
+            var percent = $" {currentProgress:P0} ";
             var bytesReceived = FileHelper.FileSizeToString(BytesReceived);
             var fileSizeInBytes = FileHelper.FileSizeToString(FileSizeInBytes);
             var bytes = $" {bytesReceived} of {fileSizeInBytes} ";
             var timeSinceLastRx = TimeSpan.FromTicks(elapsedTicks).ToFormattedString();
             var elapsed = $" {timeSinceLastRx} since last Rx ";
-            var whiteSpace = " ";
-            var animation = AnimationSequence[AnimationIndex++ % AnimationSequence.Length];
+            var animationFrame = AnimationSequence[AnimationIndex++ % AnimationSequence.Length];
+            var animation = $" {animationFrame}";
 
             if (!DisplayBar) progressBar = string.Empty;
             if (!DisplayPercentComplete) percent = string.Empty;
             if (!DisplayBytes) bytes = string.Empty;
             if (!DisplayLastRxTime) elapsed = string.Empty;
-            if (!DisplayAnimation) animation = ' ';
+            if (!DisplayAnimation || currentProgress is 1) animation = string.Empty;
 
-            if (currentProgress is 1)
-            {
-                animation = ' ';
-            }
-
-            var fullBar = $"{progressBar}{percent}{bytes}{elapsed}{whiteSpace}{animation}{whiteSpace}";
-            fullBar = fullBar.Replace("  ", " ");
-            fullBar.TrimEnd();
-
-            return fullBar;
+            return (progressBar + percent + bytes + elapsed + animation).Replace("  ", " ");
         }
     }
 }

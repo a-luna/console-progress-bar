@@ -5,7 +5,7 @@
     public static class TimeSpanExtensions
     {
         public static string ToFormattedString(this TimeSpan timeSpan)
-        {         
+        {
             var s = string.Empty;
 
             var numYears = timeSpan.Days / 365;

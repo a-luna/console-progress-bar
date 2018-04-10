@@ -1,4 +1,4 @@
-﻿namespace AaronLuna.Common.Console
+﻿namespace AaronLuna.ConsoleProgressBar
 {
 	using System;
 

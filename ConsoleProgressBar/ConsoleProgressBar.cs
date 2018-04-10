@@ -1,4 +1,4 @@
-﻿namespace AaronLuna.Common.Console
+﻿namespace AaronLuna.ConsoleProgressBar
 {
     using System;
     using System.Linq;
@@ -10,7 +10,7 @@
         readonly TimeSpan _animationInterval = TimeSpan.FromSeconds(1.0 / 8);
 
 		internal Timer Timer;
-		internal double CurrentProgress;                
+		internal double CurrentProgress;
         internal bool Disposed;
 		internal int AnimationIndex;
 
@@ -23,7 +23,7 @@
             EndBracket = "]";
             CompletedBlock = "#";
             IncompleteBlock = "-";
-            AnimationSequence = ProgressAnimations.Default;            
+            AnimationSequence = ProgressAnimations.Default;
 
             DisplayBar = true;
             DisplayPercentComplete = true;
@@ -45,11 +45,11 @@
         public string EndBracket { get; set; }
         public string CompletedBlock { get; set; }
         public string IncompleteBlock { get; set; }
-        public string AnimationSequence { get; set; }        
+        public string AnimationSequence { get; set; }
         public bool DisplayBar { get; set; }
-        public bool DisplayPercentComplete { get; set; }        
+        public bool DisplayPercentComplete { get; set; }
         public bool DisplayAnimation { get; set; }
-        
+
         public void Report(double value)
         {
 			// Make sure value is in [0..1] range
@@ -70,37 +70,27 @@
         string GetProgressBarText(double currentProgress)
         {
             var numBlocksCompleted = (int)(currentProgress * NumberOfBlocks);
-            var completedBlocks = string.Empty;
-            foreach (var i in Enumerable.Range(0, numBlocksCompleted))
-            {
-                completedBlocks += CompletedBlock;
-            }
 
-            var uncompletedBlocks = string.Empty;
-            foreach (var i in Enumerable.Range(0, NumberOfBlocks - numBlocksCompleted))
-            {
-                uncompletedBlocks += IncompleteBlock;
-            }
+            var completedBlocks =
+                Enumerable.Range(0, numBlocksCompleted).Aggregate(
+                    string.Empty,
+                    (current, _) => current + CompletedBlock);
 
-            var progressBar = $"{StartBracket}{completedBlocks}{uncompletedBlocks}{EndBracket} ";
-            var percent = $" {(int)(currentProgress * 100)}% ";
-            var whiteSpace = " ";
-            var animation = AnimationSequence[AnimationIndex++ % AnimationSequence.Length];
+            var incompleteBlocks =
+                Enumerable.Range(0, NumberOfBlocks - numBlocksCompleted).Aggregate(
+                    string.Empty,
+                    (current, _) => current + IncompleteBlock);
+
+            var progressBar = $"{StartBracket}{completedBlocks}{incompleteBlocks}{EndBracket} ";
+            var percent = $" {currentProgress:P0} ";
+            var animationFrame = AnimationSequence[AnimationIndex++ % AnimationSequence.Length];
+            var animation = $" {animationFrame}";
 
             if (!DisplayBar) progressBar = string.Empty;
             if (!DisplayPercentComplete) percent = string.Empty;
-            if (!DisplayAnimation) animation = ' ';
+            if (!DisplayAnimation || currentProgress is 1) animation = string.Empty;
 
-            if (currentProgress is 1)
-            {
-                animation = ' ';
-            }
-
-            var fullBar = $"{progressBar}{percent}{whiteSpace}{animation}{whiteSpace}";
-            fullBar = fullBar.Replace("  ", " ");
-            fullBar.TrimEnd();
-
-            return fullBar;
+            return (progressBar + percent + animation).Replace("  ", " ");
         }
 
         internal void UpdateText(string text)
