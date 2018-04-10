@@ -8,7 +8,8 @@ A simple way to represent the progress of a long-running job in a C# console app
   - **Customizable** Each component of the progress bar (start/end brackets, completed/incomplete blocks, progress animation) can be set to any string value through public properties and each item displayed (the progress bar itself, percentage complete, animation) can be shown or hidden.
 
 - **FileTransferProgressBar**
-  - **Extends** ConsoleProgressBar and tracks the time when progress was last reported. If the time since the last report exceeds the FileStalledInterval value, the FileTransferStalled event fires.
+  - **Extends** ConsoleProgressBar and adds the ability to detect when a file transfer has stalled.
+  - If the time since last progress reported exceeds the TimeSpanFileStalled value, the FileTransferStalled event fires.
   - **Provides further customization** of the progress bar with the addition of bytes received/total bytes and time since last Rx display options
   
 ## Usage
