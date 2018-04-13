@@ -1,5 +1,4 @@
 ﻿using AaronLuna.ConsoleProgressBar;
-using Microsoft.VisualBasic;
 
 namespace TestConsole
 {
@@ -32,7 +31,7 @@ namespace TestConsole
 				EndBracket = "|",
 				CompletedBlock = "|",
 				IncompleteBlock = "\u00a0",
-                AnimationSequence = ProgressAnimations.BouncingBall
+                AnimationSequence = ProgressAnimations.RotatingTriangle
             };
             await TestProgressBar(pb2);
 
@@ -43,14 +42,14 @@ namespace TestConsole
                 CompletedBlock = "\u00bb",
                 IncompleteBlock = "-",
                 DisplayPercentComplete = false,
-                AnimationSequence = ProgressAnimations.RollingBall
+                AnimationSequence = ProgressAnimations.RotatingArrow
             };
             await TestProgressBar(pb3);
 
             var pb4 = new ConsoleProgressBar
             {
                 DisplayBar = false,
-                AnimationSequence = ProgressAnimations.Explosion
+                AnimationSequence = ProgressAnimations.PulsingLine
             };
             await TestProgressBar(pb4);
         }
@@ -63,7 +62,7 @@ namespace TestConsole
                 for (var i = 0; i <= 100; i++)
                 {
                     progress.Report((double)i / 100);
-                    await Task.Delay(30);
+                    await Task.Delay(70);
                 }
 
                 progress.Report(1);
@@ -85,7 +84,7 @@ namespace TestConsole
                 IncompleteBlock = "\u00a0",
                 DisplayBytes = true,
                 DisplayLastRxTime = false,              
-			    AnimationSequence = ProgressAnimations.StackedBars
+			    AnimationSequence = ProgressAnimations.Circles
 			};
 			await TestFileTransferProgressBar(pb1, fileSize1);
 
@@ -144,7 +143,7 @@ namespace TestConsole
                 {
                     progress.BytesReceived = onePercent * i;
                     progress.Report((double)i / 100);
-                    await Task.Delay(30);
+                    await Task.Delay(70);
                 }
 
                 progress.BytesReceived = fileSize;
