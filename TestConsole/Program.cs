@@ -58,9 +58,7 @@
 
                 progress.Report(1);
                 await Task.Delay(100);
-            }
-
-            Console.WriteLine("Done.");
+            }          
         }
 
         static async Task FileTransferProgressBars()
@@ -122,8 +120,6 @@
                 progress.Report(1);
                 await Task.Delay(100);
             }
-
-            Console.WriteLine("Done.");
         }
 
         static async Task TestFileTransferStalled(FileTransferProgressBar progress, long fileSize)
