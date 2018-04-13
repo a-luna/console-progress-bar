@@ -1,13 +1,12 @@
-﻿using AaronLuna.ConsoleProgressBar;
-
-namespace TestConsole
+﻿namespace TestConsole
 {
 	using System;
 	using System.Threading.Tasks;
-	using AaronLuna.Common.Extensions;
+    using AaronLuna.Common.Extensions;
 	using AaronLuna.Common.IO;
+	using AaronLuna.ConsoleProgressBar;
 
-	static class Program
+    static class Program
     {
         // async Main is a C# 7.1 feature, change your project settings to the 
         // new version if this is flagged as an error

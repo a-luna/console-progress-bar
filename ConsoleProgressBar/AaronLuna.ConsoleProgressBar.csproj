@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ConsoleProgressBar.dt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AaronLuna.Common">
+      <HintPath>..\..\aaronluna-common\AaronLuna.Common\bin\Debug\netcoreapp2.0\AaronLuna.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
