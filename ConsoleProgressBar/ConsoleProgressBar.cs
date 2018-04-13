@@ -18,7 +18,7 @@
 
         public ConsoleProgressBar()
         {
-            Console.OutputEncoding = Encoding.Unicode;
+            Console.OutputEncoding = Encoding.UTF8;
 
             NumberOfBlocks = 10;
             StartBracket = "[";

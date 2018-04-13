@@ -12,7 +12,7 @@ namespace TestConsole
         // async Main is a C# 7.1 feature, change your project settings to the 
         // new version if this is flagged as an error
         static async Task Main()
-        {
+        {         
             await ConsoleProgressBars();
 			Console.WriteLine();
 
@@ -23,35 +23,27 @@ namespace TestConsole
         {
             var pb1 = new ConsoleProgressBar();
             await TestProgressBar(pb1);
+			Console.ReadLine();
 
 			var pb2 = new ConsoleProgressBar
 			{
-				NumberOfBlocks = 13,
+				NumberOfBlocks = 15,
 				StartBracket = "|",
 				EndBracket = "|",
 				CompletedBlock = "|",
-				IncompleteBlock = "\u00a0",
-                AnimationSequence = ProgressAnimations.RotatingTriangle
+				IncompleteBlock = " ",
+                AnimationSequence = ProgressAnimations.PulsingLine
             };
             await TestProgressBar(pb2);
+			Console.ReadLine();
 
             var pb3 = new ConsoleProgressBar
             {
-                StartBracket = string.Empty,
-                EndBracket = string.Empty,
-                CompletedBlock = "\u00bb",
-                IncompleteBlock = "-",
-                DisplayPercentComplete = false,
-                AnimationSequence = ProgressAnimations.RotatingArrow
+                DisplayBar = false,
+                AnimationSequence = ProgressAnimations.RotatingTriangle
             };
             await TestProgressBar(pb3);
-
-            var pb4 = new ConsoleProgressBar
-            {
-                DisplayBar = false,
-                AnimationSequence = ProgressAnimations.PulsingLine
-            };
-            await TestProgressBar(pb4);
+			Console.ReadLine();
         }
 
         static async Task TestProgressBar(ConsoleProgressBar progress)
@@ -77,56 +69,37 @@ namespace TestConsole
             const long fileSize1 = (long)(100 * 48 * FileHelper.OneMB);
             var pb1 = new FileTransferProgressBar(fileSize1, TimeSpan.FromSeconds(10))
             {
-                NumberOfBlocks = 10,
-                StartBracket = "|",
-                EndBracket = "|",
-                CompletedBlock = "|",
-                IncompleteBlock = "\u00a0",
-                DisplayBytes = true,
-                DisplayLastRxTime = false,              
-			    AnimationSequence = ProgressAnimations.Circles
+                NumberOfBlocks = 12,
+				StartBracket = "{",
+				EndBracket = "}",
+                CompletedBlock = "~",
+                IncompleteBlock = " ",
+			    AnimationSequence = ProgressAnimations.RotatingArrow
 			};
 			await TestFileTransferProgressBar(pb1, fileSize1);
+			Console.ReadLine();
 
             const long fileSize2 = (long)(100 * 81 * FileHelper.OneKB);
 			var pb2 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(10))
 			{
-			    NumberOfBlocks = 20,
-			    StartBracket = string.Empty,
-			    EndBracket = string.Empty,
-			    CompletedBlock = "\u00bb",
-			    IncompleteBlock = "\u00a0",
-			    DisplayBytes = false,
-			    DisplayLastRxTime = false,
-			    DisplayAnimation = false
+				NumberOfBlocks = 20,
+				StartBracket = string.Empty,
+				EndBracket = string.Empty,
+				CompletedBlock = "\u00bb",
+				IncompleteBlock = "\u00a0",
+				DisplayBytes = false,
+				DisplayLastRxTime = true,
+				DisplayAnimation = false
 			};
 			await TestFileTransferProgressBar(pb2, fileSize2);
-
-             const int fileSize3 = 100 * 59 * 1024;
-             var pb3 = new FileTransferProgressBar(fileSize3, TimeSpan.FromSeconds(10))
-             {
-                 NumberOfBlocks = 15,
-                 StartBracket = "\u00a0",
-                 EndBracket = "\u00a0",
-                 CompletedBlock = "/",
-				 IncompleteBlock = "\u00a0",
-                 DisplayLastRxTime = true,
-                 DisplayPercentComplete = false,
-                 AnimationSequence = ProgressAnimations.RotatingPipe
-             };
-             await TestFileTransferProgressBar(pb3, fileSize3);
+			Console.ReadLine();
 
             const long fileSize4 = (long)(100 * 36 * FileHelper.OneKB);
 			var pb4 = new FileTransferProgressBar(fileSize4, TimeSpan.FromSeconds(2))
 			{
-				NumberOfBlocks = 10,
-				StartBracket = "\u00a0",
-				EndBracket = "\u00a0",
-				CompletedBlock = "\\",
-				IncompleteBlock = "\u00a0",
-                DisplayBytes = false,
+				DisplayBar = false,
 				DisplayLastRxTime = true,
-				DisplayAnimation = false
+                DisplayAnimation = false
             };
             pb4.FileTransferStalled += HandleFileTransferStalled;
 
