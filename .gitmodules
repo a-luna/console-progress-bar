@@ -1,0 +1,3 @@
+[submodule "aaronluna-common"]
+	path = aaronluna-common
+	url = https://github.com/a-luna/aaronluna-common.git
