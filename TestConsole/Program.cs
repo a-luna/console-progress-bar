@@ -11,7 +11,7 @@
         // async Main is a C# 7.1 feature, change your project settings to the 
         // new version if this is flagged as an error
         static async Task Main()
-        {         
+        {
             await ConsoleProgressBars();
 			Console.WriteLine();
 
@@ -22,7 +22,6 @@
         {
             var pb1 = new ConsoleProgressBar();
             await TestProgressBar(pb1);
-			Console.ReadLine();
 
 			var pb2 = new ConsoleProgressBar
 			{
@@ -30,11 +29,10 @@
 				StartBracket = "|",
 				EndBracket = "|",
 				CompletedBlock = "|",
-				IncompleteBlock = " ",
+				IncompleteBlock = "\u00a0",
                 AnimationSequence = ProgressAnimations.PulsingLine
             };
             await TestProgressBar(pb2);
-			Console.ReadLine();
 
             var pb3 = new ConsoleProgressBar
             {
@@ -42,7 +40,6 @@
                 AnimationSequence = ProgressAnimations.RotatingTriangle
             };
             await TestProgressBar(pb3);
-			Console.ReadLine();
         }
 
         static async Task TestProgressBar(ConsoleProgressBar progress)
@@ -53,29 +50,18 @@
                 for (var i = 0; i <= 100; i++)
                 {
                     progress.Report((double)i / 100);
-                    await Task.Delay(70);
+                    await Task.Delay(40);
                 }
 
                 progress.Report(1);
                 await Task.Delay(100);
-            }          
+            }
+
+            Console.WriteLine();
         }
 
         static async Task FileTransferProgressBars()
         {
-            const long fileSize1 = (long)(100 * 48 * FileHelper.OneMB);
-            var pb1 = new FileTransferProgressBar(fileSize1, TimeSpan.FromSeconds(10))
-            {
-                NumberOfBlocks = 12,
-				StartBracket = "{",
-				EndBracket = "}",
-                CompletedBlock = "~",
-                IncompleteBlock = " ",
-			    AnimationSequence = ProgressAnimations.RotatingArrow
-			};
-			await TestFileTransferProgressBar(pb1, fileSize1);
-			Console.ReadLine();
-
             const long fileSize2 = (long)(100 * 81 * FileHelper.OneKB);
 			var pb2 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(10))
 			{
@@ -84,18 +70,14 @@
 				EndBracket = string.Empty,
 				CompletedBlock = "\u00bb",
 				IncompleteBlock = "\u00a0",
-				DisplayBytes = false,
-				DisplayLastRxTime = true,
-				DisplayAnimation = false
+                AnimationSequence = ProgressAnimations.RotatingDot
 			};
 			await TestFileTransferProgressBar(pb2, fileSize2);
-			Console.ReadLine();
 
-            const long fileSize4 = (long)(100 * 36 * FileHelper.OneKB);
+            const long fileSize4 = (long)(10 * 36 * FileHelper.OneMB);
 			var pb4 = new FileTransferProgressBar(fileSize4, TimeSpan.FromSeconds(2))
 			{
 				DisplayBar = false,
-				DisplayLastRxTime = true,
                 DisplayAnimation = false
             };
             pb4.FileTransferStalled += HandleFileTransferStalled;
@@ -113,13 +95,15 @@
                 {
                     progress.BytesReceived = onePercent * i;
                     progress.Report((double)i / 100);
-                    await Task.Delay(70);
+                    await Task.Delay(40);
                 }
 
                 progress.BytesReceived = fileSize;
                 progress.Report(1);
                 await Task.Delay(100);
             }
+
+            Console.WriteLine();
         }
 
         static async Task TestFileTransferStalled(FileTransferProgressBar progress, long fileSize)
@@ -132,7 +116,7 @@
                 {
 					progress.BytesReceived = onePercent * i;
                     progress.Report((double)i / 100);
-                    await Task.Delay(15);
+                    await Task.Delay(40);
                 }
 
         		await Task.Delay(3000);
@@ -145,10 +129,7 @@
         	pb.Dispose();
 
         	Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}File transfer stalled!");
-        	Console.WriteLine($"Last Progress Reported: {eventArgs.LastDataReceived}");
-        	Console.WriteLine($"Notified Transfer Stalled: {eventArgs.TimeOutTriggered}");
-        	Console.WriteLine($"Transfer Idle Timespan (Expected): {pb.TimeSpanFileStalled.ToFormattedString()}");
-        	Console.WriteLine($"Transfer Idle Timespan (Actual): {eventArgs.Elapsed.ToFormattedString()}");
+        	Console.WriteLine($"No data received for {pb.TimeSpanFileStalled.Seconds} seconds");
         }
     }
 }

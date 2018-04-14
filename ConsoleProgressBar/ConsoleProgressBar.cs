@@ -71,6 +71,8 @@
 
         string GetProgressBarText(double currentProgress)
         {
+            const string singleSpace = " ";
+
             var numBlocksCompleted = (int)(currentProgress * NumberOfBlocks);
 
             var completedBlocks =
@@ -83,16 +85,35 @@
                     string.Empty,
                     (current, _) => current + IncompleteBlock);
 
-            var progressBar = $"{StartBracket}{completedBlocks}{incompleteBlocks}{EndBracket} ";
-            var percent = $" {currentProgress:P0} ";
+            var progressBar = $"{StartBracket}{completedBlocks}{incompleteBlocks}{EndBracket}";
+            var percent = $"{currentProgress:P0}".PadLeft(4, '\u00a0');
             var animationFrame = AnimationSequence[AnimationIndex++ % AnimationSequence.Length];
-            var animation = $" {animationFrame}";
+            var animation = $"{animationFrame}";
 
-            if (!DisplayBar) progressBar = string.Empty;
-            if (!DisplayPercentComplete) percent = string.Empty;
-            if (!DisplayAnimation || currentProgress is 1) animation = string.Empty;
+            if (!DisplayBar) 
+            {
+                progressBar = string.Empty;
+            }
+            else
+            {
+                progressBar = progressBar + singleSpace;
+            }
 
-            return (progressBar + percent + animation).Replace("  ", " ");
+            if (!DisplayPercentComplete) 
+            {
+                percent = string.Empty;
+            }
+            else
+            {
+                percent = percent + singleSpace;
+            }
+
+            if (!DisplayAnimation || currentProgress is 1) 
+            {
+                animation = string.Empty;
+            }
+
+            return (progressBar + percent + animation);
         }
 
         internal void UpdateText(string text)

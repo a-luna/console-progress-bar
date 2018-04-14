@@ -19,7 +19,6 @@
 			BytesReceived = 0;
 			TimeSpanFileStalled = timeout;
             DisplayBytes = true;
-            DisplayLastRxTime = false;
 
 			Timer = new Timer(TimerHandler);
 
@@ -36,7 +35,6 @@
 		public long BytesReceived { get; set; }
 		public TimeSpan TimeSpanFileStalled { get; set; }
 		public bool DisplayBytes { get; set; }
-        public bool DisplayLastRxTime { get; set; }
 
 		public event EventHandler<ProgressEventArgs> FileTransferStalled;
 
@@ -74,6 +72,8 @@
 
 		string GetProgressBarText(double currentProgress, long elapsedTicks)
         {
+            const string singleSpace = " ";
+
             var numBlocksCompleted = (int)(currentProgress * NumberOfBlocks);
 
             var completedBlocks =
@@ -86,23 +86,50 @@
                     string.Empty,
                     (current, _) => current + IncompleteBlock);
 
-            var progressBar = $"{StartBracket}{completedBlocks}{incompleteBlocks}{EndBracket} ";
-            var percent = $" {currentProgress:P0} ";
-            var bytesReceived = FileHelper.FileSizeToString(BytesReceived);
+            var progressBar = $"{StartBracket}{completedBlocks}{incompleteBlocks}{EndBracket}";
+            var percent = $"{currentProgress:P0}".PadLeft(4, '\u00a0');
+
             var fileSizeInBytes = FileHelper.FileSizeToString(FileSizeInBytes);
-            var bytes = $" {bytesReceived} of {fileSizeInBytes} ";
-            var timeSinceLastRx = TimeSpan.FromTicks(elapsedTicks).ToFormattedString();
-            var elapsed = $" {timeSinceLastRx} since last Rx ";
+            var padLength = fileSizeInBytes.Length;
+            var bytesReceived = FileHelper.FileSizeToString(BytesReceived).PadLeft(padLength, '\u00a0');
+            var bytes = $"{bytesReceived} of {fileSizeInBytes}";
+
             var animationFrame = AnimationSequence[AnimationIndex++ % AnimationSequence.Length];
-            var animation = $" {animationFrame}";
+            var animation = $"{animationFrame}";
 
-            if (!DisplayBar) progressBar = string.Empty;
-            if (!DisplayPercentComplete) percent = string.Empty;
-            if (!DisplayBytes) bytes = string.Empty;
-            if (!DisplayLastRxTime) elapsed = string.Empty;
-            if (!DisplayAnimation || currentProgress is 1) animation = string.Empty;
+            if (!DisplayBar) 
+            {
+                progressBar = string.Empty;
+            }
+            else
+            {
+                progressBar = progressBar + singleSpace;
+            }
 
-            return (progressBar + percent + bytes + elapsed + animation).Replace("  ", " ");
+            if (!DisplayPercentComplete) 
+            {
+                percent = string.Empty;
+            }
+            else
+            {
+                percent = percent + singleSpace;
+            }
+
+            if (!DisplayBytes) 
+            {
+                bytes = string.Empty;
+            }
+            else
+            {
+                bytes = bytes + singleSpace;
+            }
+
+            if (!DisplayAnimation || currentProgress is 1) 
+            {
+                animation = string.Empty;
+            }
+
+            return (progressBar + percent + bytes + animation);
         }
     }
 }
