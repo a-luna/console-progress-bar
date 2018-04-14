@@ -6,6 +6,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "..\TestConso
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AaronLuna.ConsoleProgressBar", "AaronLuna.ConsoleProgressBar.csproj", "{A4005B21-9472-4371-83C2-9EB5CF78FEC7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AaronLuna.Common", "..\aaronluna-common\AaronLuna.Common\AaronLuna.Common.csproj", "{28C47BBD-1ACF-4F95-A745-F1DA10C3D2CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{A4005B21-9472-4371-83C2-9EB5CF78FEC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4005B21-9472-4371-83C2-9EB5CF78FEC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4005B21-9472-4371-83C2-9EB5CF78FEC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28C47BBD-1ACF-4F95-A745-F1DA10C3D2CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28C47BBD-1ACF-4F95-A745-F1DA10C3D2CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28C47BBD-1ACF-4F95-A745-F1DA10C3D2CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28C47BBD-1ACF-4F95-A745-F1DA10C3D2CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
