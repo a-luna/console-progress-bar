@@ -12,7 +12,11 @@
     <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\aaronluna-common\AaronLuna.Common\AaronLuna.Common.csproj" />
     <ProjectReference Include="..\ConsoleProgressBar\AaronLuna.ConsoleProgressBar.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AaronLuna.Common">
+      <HintPath>..\ExternalReferences\AaronLuna.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

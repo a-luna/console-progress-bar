@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\aaronluna-common\AaronLuna.Common\AaronLuna.Common.csproj" />
+    <Reference Include="AaronLuna.Common">
+      <HintPath>..\ExternalReferences\AaronLuna.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
