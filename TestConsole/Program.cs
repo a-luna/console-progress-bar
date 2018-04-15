@@ -23,7 +23,7 @@
 		static async Task ConsoleProgressBars()
         {
             var pb1 = new ConsoleProgressBar();
-            await TestProgressBar(pb1);
+            await TestProgressBar(pb1, 1);
 
 			var pb2 = new ConsoleProgressBar
 			{
@@ -34,19 +34,19 @@
 				IncompleteBlock = "\u00a0",
                 AnimationSequence = ProgressAnimations.PulsingLine
             };
-            await TestProgressBar(pb2);
+            await TestProgressBar(pb2, 2);
 
             var pb3 = new ConsoleProgressBar
             {
                 DisplayBar = false,
                 AnimationSequence = ProgressAnimations.RotatingTriangle
             };
-            await TestProgressBar(pb3);
+            await TestProgressBar(pb3, 3);
         }
 
-        static async Task TestProgressBar(ConsoleProgressBar progress)
+        static async Task TestProgressBar(ConsoleProgressBar progress, int num)
         {
-            Console.Write("Performing some task... ");
+            Console.Write($"{num}. Performing some task... ");
             using (progress)
             {
                 for (var i = 0; i <= 100; i++)
@@ -74,7 +74,7 @@
 				IncompleteBlock = "\u00a0",
                 AnimationSequence = ProgressAnimations.RotatingPipe
 			};
-			await TestFileTransferProgressBar(pb2, fileSize2);
+			await TestFileTransferProgressBar(pb2, fileSize2, 4);
 
             const long fileSize4 = (long)(10 * 36 * FileHelper.OneMB);
 			var pb4 = new FileTransferProgressBar(fileSize4, TimeSpan.FromSeconds(2))
@@ -84,12 +84,12 @@
             };
             pb4.FileTransferStalled += HandleFileTransferStalled;
 
-            await TestFileTransferStalled(pb4, fileSize4);
+            await TestFileTransferStalled(pb4, fileSize4, 5);
         }
 
-        static async Task TestFileTransferProgressBar(FileTransferProgressBar progress, long fileSize)
+        static async Task TestFileTransferProgressBar(FileTransferProgressBar progress, long fileSize, int num)
         {
-            Console.Write("File transfer in progress... ");
+            Console.Write($"{num}. File transfer in progress... ");
             using (progress)
             {
 				var onePercent = fileSize / 100;
@@ -108,9 +108,9 @@
             Console.WriteLine();
         }
 
-        static async Task TestFileTransferStalled(FileTransferProgressBar progress, long fileSize)
+        static async Task TestFileTransferStalled(FileTransferProgressBar progress, long fileSize, int num)
         {
-        	Console.Write("File transfer in progress... ");
+        	Console.Write($"{num}. File transfer in progress... ");
             using (progress)
             {
 				var onePercent = fileSize / 100;

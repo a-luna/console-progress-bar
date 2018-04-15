@@ -129,7 +129,7 @@
                 animation = string.Empty;
             }
 
-            return (progressBar + percent + bytes + animation);
+            return (progressBar + bytes + percent + animation);
         }
     }
 }
