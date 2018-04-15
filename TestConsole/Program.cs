@@ -12,10 +12,12 @@
         // new version if this is flagged as an error
         static async Task Main()
         {
+            Console.Clear();
             await ConsoleProgressBars();
 			Console.WriteLine();
 
             await FileTransferProgressBars();
+            Console.WriteLine();
         }
 
 		static async Task ConsoleProgressBars()
