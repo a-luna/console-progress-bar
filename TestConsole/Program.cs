@@ -70,7 +70,7 @@
 				EndBracket = string.Empty,
 				CompletedBlock = "\u00bb",
 				IncompleteBlock = "\u00a0",
-                AnimationSequence = ProgressAnimations.RotatingDot
+                AnimationSequence = ProgressAnimations.RotatingPipe
 			};
 			await TestFileTransferProgressBar(pb2, fileSize2);
 
