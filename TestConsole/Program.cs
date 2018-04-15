@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Threading.Tasks;
+    using AaronLuna.Common.Console;
     using AaronLuna.Common.Extensions;
 	using AaronLuna.Common.IO;
 	using AaronLuna.ConsoleProgressBar;
@@ -32,7 +33,7 @@
 				EndBracket = "|",
 				CompletedBlock = "|",
 				IncompleteBlock = "\u00a0",
-                AnimationSequence = ProgressAnimations.PulsingLine
+                AnimationSequence = ProgressAnimations.RandomBrailleSequence()
             };
             await TestProgressBar(pb2, 2);
 
@@ -67,12 +68,12 @@
             const long fileSize2 = (long)(100 * 81 * FileHelper.OneKB);
 			var pb2 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(10))
 			{
-				NumberOfBlocks = 20,
+				NumberOfBlocks = 10,
 				StartBracket = string.Empty,
 				EndBracket = string.Empty,
-				CompletedBlock = "\u00bb",
-				IncompleteBlock = "\u00a0",
-                AnimationSequence = ProgressAnimations.RotatingPipe
+				CompletedBlock = "\u25a0",
+				IncompleteBlock = "\u25a1",
+                AnimationSequence = ProgressAnimations.RotatingDot
 			};
 			await TestFileTransferProgressBar(pb2, fileSize2, 4);
 
