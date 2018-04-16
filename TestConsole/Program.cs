@@ -13,6 +13,7 @@
         static async Task Main()
         {
             Console.Clear();
+            await Task.Delay(2000);
             await ConsoleProgressBars();
             Console.WriteLine();
 
