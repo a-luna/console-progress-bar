@@ -3,9 +3,7 @@
 	using System;
     using System.Linq;
     using System.Threading;
-
-	using Common.Extensions;
-    using Common.IO;
+	using Common.IO;
 
 	public class FileTransferProgressBar : ConsoleProgressBar
     {
@@ -56,7 +54,7 @@
                 var elapsedTicks = DateTime.Now.Ticks - _lastReportTicks;
                 var elapsed = TimeSpan.FromTicks(elapsedTicks);
 
-                UpdateText(GetProgressBarText(CurrentProgress, elapsedTicks));
+                UpdateText(GetProgressBarText(CurrentProgress));
                 ResetTimer();
 
                 if (elapsed < TimeSpanFileStalled) return;
@@ -70,7 +68,7 @@
             }
         }
 
-		string GetProgressBarText(double currentProgress, long elapsedTicks)
+		string GetProgressBarText(double currentProgress)
         {
             const string singleSpace = " ";
 

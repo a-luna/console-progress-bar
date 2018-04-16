@@ -2,8 +2,7 @@
 {
 	using System;
 	using System.Threading.Tasks;
-    using AaronLuna.Common.Console;
-    using AaronLuna.Common.Extensions;
+
 	using AaronLuna.Common.IO;
 	using AaronLuna.ConsoleProgressBar;
 
@@ -15,7 +14,7 @@
         {
             Console.Clear();
             await ConsoleProgressBars();
-			Console.WriteLine();
+            Console.WriteLine();
 
             await FileTransferProgressBars();
             Console.WriteLine();
@@ -28,12 +27,12 @@
 
 			var pb2 = new ConsoleProgressBar
 			{
-				NumberOfBlocks = 15,
-				StartBracket = "|",
-				EndBracket = "|",
-				CompletedBlock = "|",
-				IncompleteBlock = "\u00a0",
-                AnimationSequence = ProgressAnimations.RandomBrailleSequence()
+				NumberOfBlocks = 18,
+				StartBracket = string.Empty,
+				EndBracket = string.Empty,
+				CompletedBlock = "\u2022",
+				IncompleteBlock = "·",
+                AnimationSequence = ProgressAnimations.RotatingPipe
             };
             await TestProgressBar(pb2, 2);
 
@@ -50,14 +49,14 @@
             Console.Write($"{num}. Performing some task... ");
             using (progress)
             {
-                for (var i = 0; i <= 100; i++)
+                for (var i = 0; i <= 500; i++)
                 {
-                    progress.Report((double)i / 100);
-                    await Task.Delay(40);
+                    progress.Report((double)i / 500);
+                    await Task.Delay(2);
                 }
 
                 progress.Report(1);
-                await Task.Delay(100);
+                await Task.Delay(200);
             }
 
             Console.WriteLine();
@@ -68,16 +67,16 @@
             const long fileSize2 = (long)(100 * 81 * FileHelper.OneKB);
 			var pb2 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(10))
 			{
-				NumberOfBlocks = 10,
-				StartBracket = string.Empty,
-				EndBracket = string.Empty,
-				CompletedBlock = "\u25a0",
-				IncompleteBlock = "\u25a1",
-                AnimationSequence = ProgressAnimations.RotatingDot
+				NumberOfBlocks = 15,
+				StartBracket = "|",
+				EndBracket = "|",
+				CompletedBlock = "|",
+				IncompleteBlock = "\u00a0",
+                AnimationSequence = ProgressAnimations.PulsingLine
 			};
 			await TestFileTransferProgressBar(pb2, fileSize2, 4);
 
-            const long fileSize4 = (long)(10 * 36 * FileHelper.OneMB);
+            const long fileSize4 = (long)(100 * 36 * FileHelper.OneMB);
 			var pb4 = new FileTransferProgressBar(fileSize4, TimeSpan.FromSeconds(2))
 			{
 				DisplayBar = false,
@@ -93,17 +92,16 @@
             Console.Write($"{num}. File transfer in progress... ");
             using (progress)
             {
-				var onePercent = fileSize / 100;
-                for (int i = 0; i <= 100; i++)
+                for (int i = 0; i <= 500; i++)
                 {
-                    progress.BytesReceived = onePercent * i;
-                    progress.Report((double)i / 100);
-                    await Task.Delay(40);
+                    progress.BytesReceived = i * (fileSize / 500);
+                    progress.Report((double)i / 500);
+                    await Task.Delay(2);
                 }
 
                 progress.BytesReceived = fileSize;
                 progress.Report(1);
-                await Task.Delay(100);
+                await Task.Delay(200);
             }
 
             Console.WriteLine();
@@ -114,12 +112,11 @@
         	Console.Write($"{num}. File transfer in progress... ");
             using (progress)
             {
-				var onePercent = fileSize / 100;
-                for (int i = 0; i <= 63; i++)
+                for (int i = 0; i <= 170; i++)
                 {
-					progress.BytesReceived = onePercent * i;
-                    progress.Report((double)i / 100);
-                    await Task.Delay(40);
+					progress.BytesReceived = i * (fileSize / 1000);
+                    progress.Report((double)i / 1000);
+                    await Task.Delay(2);
                 }
 
         		await Task.Delay(3000);

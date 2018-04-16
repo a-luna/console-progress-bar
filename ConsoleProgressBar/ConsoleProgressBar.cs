@@ -113,7 +113,7 @@
                 animation = string.Empty;
             }
 
-            return (progressBar + percent + animation);
+            return (progressBar + percent + animation).TrimEnd();
         }
 
         internal void UpdateText(string text)
