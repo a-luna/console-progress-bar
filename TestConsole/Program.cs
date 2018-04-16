@@ -49,9 +49,9 @@
             Console.Write($"{num}. Performing some task... ");
             using (progress)
             {
-                for (var i = 0; i <= 500; i++)
+                for (var i = 0; i <= 150; i++)
                 {
-                    progress.Report((double)i / 500);
+                    progress.Report((double)i / 150);
                     await Task.Delay(2);
                 }
 
@@ -77,7 +77,7 @@
 			await TestFileTransferProgressBar(pb2, fileSize2, 4);
 
             const long fileSize4 = (long)(100 * 36 * FileHelper.OneMB);
-			var pb4 = new FileTransferProgressBar(fileSize4, TimeSpan.FromSeconds(2))
+			var pb4 = new FileTransferProgressBar(fileSize4, TimeSpan.FromSeconds(5))
 			{
 				DisplayBar = false,
                 DisplayAnimation = false
@@ -92,10 +92,10 @@
             Console.Write($"{num}. File transfer in progress... ");
             using (progress)
             {
-                for (int i = 0; i <= 500; i++)
+                for (int i = 0; i <= 150; i++)
                 {
-                    progress.BytesReceived = i * (fileSize / 500);
-                    progress.Report((double)i / 500);
+                    progress.BytesReceived = i * (fileSize / 150);
+                    progress.Report((double)i / 150);
                     await Task.Delay(2);
                 }
 
@@ -112,14 +112,14 @@
         	Console.Write($"{num}. File transfer in progress... ");
             using (progress)
             {
-                for (int i = 0; i <= 170; i++)
+                for (int i = 0; i <= 110; i++)
                 {
 					progress.BytesReceived = i * (fileSize / 1000);
                     progress.Report((double)i / 1000);
                     await Task.Delay(2);
                 }
 
-        		await Task.Delay(3000);
+        		await Task.Delay(6000);
             }
         }
 
@@ -129,7 +129,7 @@
         	pb.Dispose();
 
         	Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}File transfer stalled!");
-        	Console.WriteLine($"No data received for {pb.TimeSpanFileStalled.Seconds} seconds");
+        	Console.WriteLine($"{pb.TimeSpanFileStalled.Seconds} seconds elapsed since last data received");
         }
     }
 }
