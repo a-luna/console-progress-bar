@@ -25,7 +25,8 @@ A simple way to represent the progress of a long-running job in a C# console app
 // 1. Default behavior
 var pb1 = new ConsoleProgressBar();
 await TestProgressBar(pb1, 1);
-
+```
+```csharp
 // 2. Customized all progress bar components
 var pb2 = new ConsoleProgressBar
 {
@@ -37,7 +38,8 @@ var pb2 = new ConsoleProgressBar
     AnimationSequence = ProgressAnimations.RotatingPipe
 };
 await TestProgressBar(pb2, 2);
-
+```
+```csharp
 // 3. Hide progress bar
 var pb3 = new ConsoleProgressBar
 {
@@ -45,7 +47,8 @@ var pb3 = new ConsoleProgressBar
     AnimationSequence = ProgressAnimations.RotatingTriangle
 };
 await TestProgressBar(pb3, 3)
-
+```
+```csharp
 // 4. Customized progress bar, successful file transfer
 const long fileSize = (long)(8 * FileHelper.OneKB);
 var pb4 = new FileTransferProgressBar(fileSize, TimeSpan.FromSeconds(5))
@@ -58,7 +61,8 @@ var pb4 = new FileTransferProgressBar(fileSize, TimeSpan.FromSeconds(5))
     AnimationSequence = ProgressAnimations.PulsingLine
 };
 await TestFileTransferProgressBar(pb4, fileSize, 4);
-
+```
+```csharp
 // 5. Hide progress bar and animation, unsuccessful file transfer
 const long fileSize4 = (long)(100 * 36 * FileHelper.OneMB);
 var pb4 = new FileTransferProgressBar(fileSize4, TimeSpan.FromSeconds(5))
