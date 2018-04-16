@@ -64,14 +64,14 @@ await TestFileTransferProgressBar(pb4, fileSize, 4);
 ```
 ```csharp
 // 5. Hide progress bar and animation, unsuccessful file transfer
-const long fileSize4 = (long)(100 * 36 * FileHelper.OneMB);
-var pb4 = new FileTransferProgressBar(fileSize4, TimeSpan.FromSeconds(5))
+const long fileSize2 = (long)(100 * 36 * FileHelper.OneMB);
+var pb5 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(5))
 {
     DisplayBar = false,
     DisplayAnimation = false
 };
-pb4.FileTransferStalled += HandleFileTransferStalled;
-await TestFileTransferStalled(pb4, fileSize4, 5);
+pb5.FileTransferStalled += HandleFileTransferStalled;
+await TestFileTransferStalled(pb5, fileSize2, 5);
 ```
 ### Test Methods Referenced by Examples
 ```csharp
