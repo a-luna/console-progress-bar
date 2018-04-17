@@ -23,57 +23,50 @@ A simple way to represent the progress of a long-running task in a C# console ap
 ## Usage
 Numbers correspond to the examples shown above, full source code for examples can be found in **./TestConsole/Program.cs**
 ```csharp
-static async Task ConsoleProgressBars()
+// 1. Default behavior
+var pb1 = new ConsoleProgressBar();
+await TestProgressBar(pb1, 1);
+
+// 2. Customized all progress bar components
+var pb2 = new ConsoleProgressBar
 {
-    // 1. Default behavior
-    var pb1 = new ConsoleProgressBar();
-    await TestProgressBar(pb1, 1);
+NumberOfBlocks = 18,
+StartBracket = string.Empty,
+EndBracket = string.Empty,
+CompletedBlock = "\u2022",
+IncompleteBlock = "·",
+AnimationSequence = ProgressAnimations.RotatingPipe
+};
+await TestProgressBar(pb2, 2);
 
-    // 2. Customized all progress bar components
-    var pb2 = new ConsoleProgressBar
-    {
-	NumberOfBlocks = 18,
-	StartBracket = string.Empty,
-	EndBracket = string.Empty,
-	CompletedBlock = "\u2022",
-	IncompleteBlock = "·",
-	AnimationSequence = ProgressAnimations.RotatingPipe
-    };
-    await TestProgressBar(pb2, 2);
-
-    // 3. Hide progress bar
-    var pb3 = new ConsoleProgressBar
-    {
-	DisplayBar = false,
-	AnimationSequence = ProgressAnimations.RotatingTriangle
-    };
-    await TestProgressBar(pb3, 3);
-}
-```
-```csharp
-static async Task FileTransferProgressBars()
+// 3. Hide progress bar
+var pb3 = new ConsoleProgressBar
 {
-    // 4. Customized progress bar, successful file transfer
-    const long fileSize = (long)(8 * FileHelper.OneKB);
-    var pb4 = new FileTransferProgressBar(fileSize, TimeSpan.FromSeconds(5))
-    {
-	NumberOfBlocks = 15,
-	StartBracket = "|",
-	EndBracket = "|",
-	CompletedBlock = "|",
-	IncompleteBlock = "\u00a0",
-	AnimationSequence = ProgressAnimations.PulsingLine
-    };
-    await TestFileTransferProgressBar(pb4, fileSize, 4);
+DisplayBar = false,
+AnimationSequence = ProgressAnimations.RotatingTriangle
+};
+await TestProgressBar(pb3, 3);
 
-    // 5. Hide progress bar and animation, unsuccessful file transfer
-    const long fileSize2 = (long)(100 * 36 * FileHelper.OneMB);
-    var pb5 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(5))
-    {
-	DisplayBar = false,
-	DisplayAnimation = false
-    };
-    pb5.FileTransferStalled += HandleFileTransferStalled;
-    await TestFileTransferStalled(pb5, fileSize4, 5);
-}
+// 4. Customized progress bar, successful file transfer
+const long fileSize = (long)(8 * FileHelper.OneKB);
+var pb4 = new FileTransferProgressBar(fileSize, TimeSpan.FromSeconds(5))
+{
+NumberOfBlocks = 15,
+StartBracket = "|",
+EndBracket = "|",
+CompletedBlock = "|",
+IncompleteBlock = "\u00a0",
+AnimationSequence = ProgressAnimations.PulsingLine
+};
+await TestFileTransferProgressBar(pb4, fileSize, 4);
+
+// 5. Hide progress bar and animation, unsuccessful file transfer
+const long fileSize2 = (long)(100 * 36 * FileHelper.OneMB);
+var pb5 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(5))
+{
+DisplayBar = false,
+DisplayAnimation = false
+};
+pb5.FileTransferStalled += HandleFileTransferStalled;
+await TestFileTransferStalled(pb5, fileSize4, 5);
 ```
