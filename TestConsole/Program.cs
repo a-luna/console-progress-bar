@@ -1,10 +1,10 @@
 ﻿namespace TestConsole
 {
-	using System;
-	using System.Threading.Tasks;
+    using System;
+    using System.Threading.Tasks;
 
-	using AaronLuna.Common.IO;
-	using AaronLuna.ConsoleProgressBar;
+    using AaronLuna.Common.IO;
+    using AaronLuna.ConsoleProgressBar;
 
     static class Program
     {
@@ -21,18 +21,18 @@
             Console.WriteLine();
         }
 
-		static async Task ConsoleProgressBars()
+	static async Task ConsoleProgressBars()
         {
             var pb1 = new ConsoleProgressBar();
             await TestProgressBar(pb1, 1);
-
-			var pb2 = new ConsoleProgressBar
-			{
-				NumberOfBlocks = 18,
-				StartBracket = string.Empty,
-				EndBracket = string.Empty,
-				CompletedBlock = "\u2022",
-				IncompleteBlock = "·",
+	
+	    var pb2 = new ConsoleProgressBar
+	    {
+		NumberOfBlocks = 18,
+		StartBracket = string.Empty,
+		EndBracket = string.Empty,
+		CompletedBlock = "\u2022",
+		IncompleteBlock = "·",
                 AnimationSequence = ProgressAnimations.RotatingPipe
             };
             await TestProgressBar(pb2, 2);
@@ -109,17 +109,17 @@
 
         static async Task TestFileTransferStalled(FileTransferProgressBar progress, long fileSize, int num)
         {
-        	Console.Write($"{num}. File transfer in progress... ");
+            Console.Write($"{num}. File transfer in progress... ");
             using (progress)
             {
                 for (int i = 0; i <= 110; i++)
                 {
-					progress.BytesReceived = i * (fileSize / 1000);
+		            progress.BytesReceived = i * (fileSize / 1000);
                     progress.Report((double)i / 1000);
                     await Task.Delay(2);
                 }
 
-        		await Task.Delay(6000);
+        	await Task.Delay(6000);
             }
         }
 

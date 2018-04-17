@@ -1,24 +1,24 @@
 ﻿namespace AaronLuna.ConsoleProgressBar
 {
-	using System;
+    using System;
     using System.Linq;
     using System.Threading;
-	using Common.IO;
+    using Common.IO;
 
-	public class FileTransferProgressBar : ConsoleProgressBar
+    public class FileTransferProgressBar : ConsoleProgressBar
     {
-		long _lastReportTicks;
+	long _lastReportTicks;
 
-		public FileTransferProgressBar(long fileSizeInBytes, TimeSpan timeout)
-		{
-			_lastReportTicks = DateTime.Now.Ticks;
+	public FileTransferProgressBar(long fileSizeInBytes, TimeSpan timeout)
+	{
+	    _lastReportTicks = DateTime.Now.Ticks;
 
-			FileSizeInBytes = fileSizeInBytes;
-			BytesReceived = 0;
-			TimeSpanFileStalled = timeout;
+	    FileSizeInBytes = fileSizeInBytes;
+	    BytesReceived = 0;
+	    TimeSpanFileStalled = timeout;
             DisplayBytes = true;
 
-			Timer = new Timer(TimerHandler);
+	    Timer = new Timer(TimerHandler);
 
             // A progress bar is only for temporary display in a console window.
             // If the console output is redirected to a file, draw nothing.
@@ -27,16 +27,16 @@
             {
                 ResetTimer();
             }
-		}
+	}
 
-		public long FileSizeInBytes { get; set; }
-		public long BytesReceived { get; set; }
-		public TimeSpan TimeSpanFileStalled { get; set; }
-		public bool DisplayBytes { get; set; }
+	public long FileSizeInBytes { get; set; }
+	public long BytesReceived { get; set; }
+	public TimeSpan TimeSpanFileStalled { get; set; }
+	public bool DisplayBytes { get; set; }
 
-		public event EventHandler<ProgressEventArgs> FileTransferStalled;
+	public event EventHandler<ProgressEventArgs> FileTransferStalled;
 
-		public new void Report(double value)
+	public new void Report(double value)
         {
             var ticks = DateTime.Now.Ticks;
             Interlocked.Exchange(ref _lastReportTicks, ticks);
@@ -46,7 +46,7 @@
             Interlocked.Exchange(ref CurrentProgress, value);
         }
 
-		void TimerHandler(object state)
+	void TimerHandler(object state)
         {
             lock (Timer)
             {
@@ -68,7 +68,7 @@
             }
         }
 
-		string GetProgressBarText(double currentProgress)
+	string GetProgressBarText(double currentProgress)
         {
             const string singleSpace = " ";
 

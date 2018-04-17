@@ -9,12 +9,12 @@
     {
         readonly TimeSpan _animationInterval = TimeSpan.FromSeconds(1.0 / 8);
 
-		internal Timer Timer;
-		internal double CurrentProgress;
+	internal Timer Timer;
+	internal double CurrentProgress;
         internal bool Disposed;
-		internal int AnimationIndex;
+	internal int AnimationIndex;
 
-		string _currentText = string.Empty;
+	string _currentText = string.Empty;
 
         public ConsoleProgressBar()
         {
@@ -31,7 +31,7 @@
             DisplayPercentComplete = true;
             DisplayAnimation = true;
 
-			Timer = new Timer(TimerHandler);
+	    Timer = new Timer(TimerHandler);
 
             // A progress bar is only for temporary display in a console window.
             // If the console output is redirected to a file, draw nothing.
@@ -54,7 +54,7 @@
 
         public void Report(double value)
         {
-			// Make sure value is in [0..1] range
+	    // Make sure value is in [0..1] range
             value = Math.Max(0, Math.Min(1, value));
             Interlocked.Exchange(ref CurrentProgress, value);
         }
