@@ -14,130 +14,66 @@ A simple way to represent the progress of a long-running job in a C# console app
   
 ## Examples
 ### Windows
-![File Transfer Progress Bar-4](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ProgressBar_Win.gif)
+![Progress Bar_Win](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ProgressBar_Win.gif)
 ### Mac (VS Code)
-![File Transfer Progress Bar-4](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ProgressBar_Mac.gif)
+![Progress Bar_Mac](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ProgressBar_Mac.gif)
 ### Ubuntu
-![File Transfer Progress Bar-4](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ProgressBar_Ubuntu.gif)
+![Progress Bar_Ubuntu](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ProgressBar_Ubuntu.gif)
   
-## Usage (Numbers correspond to those shown in the examples)
+## Usage
+### Numbers correspond to the examples shown above, full source code for examples can be found in ./TestConsole/Program.cs
 ```csharp
-// 1. Default behavior
-var pb1 = new ConsoleProgressBar();
-await TestProgressBar(pb1, 1);
-```
-```csharp
-// 2. Customized all progress bar components
-var pb2 = new ConsoleProgressBar
+static async Task ConsoleProgressBars()
 {
-    NumberOfBlocks = 18,
-    StartBracket = string.Empty,
-    EndBracket = string.Empty,
-    CompletedBlock = "\u2022",
-    IncompleteBlock = "·",
-    AnimationSequence = ProgressAnimations.RotatingPipe
-};
-await TestProgressBar(pb2, 2);
-```
-```csharp
-// 3. Hide progress bar
-var pb3 = new ConsoleProgressBar
-{
-    DisplayBar = false,
-    AnimationSequence = ProgressAnimations.RotatingTriangle
-};
-await TestProgressBar(pb3, 3)
-```
-```csharp
-// 4. Customized progress bar, successful file transfer
-const long fileSize = (long)(8 * FileHelper.OneKB);
-var pb4 = new FileTransferProgressBar(fileSize, TimeSpan.FromSeconds(5))
-{
-    NumberOfBlocks = 15,
-    StartBracket = "|",
-    EndBracket = "|",
-    CompletedBlock = "|",
-    IncompleteBlock = "\u00a0",   // Non-breaking space
-    AnimationSequence = ProgressAnimations.PulsingLine
-};
-await TestFileTransferProgressBar(pb4, fileSize, 4);
-```
-```csharp
-// 5. Hide progress bar and animation, unsuccessful file transfer
-const long fileSize2 = (long)(100 * 36 * FileHelper.OneMB);
-var pb5 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(5))
-{
-    DisplayBar = false,
-    DisplayAnimation = false
-};
-pb5.FileTransferStalled += HandleFileTransferStalled;
-await TestFileTransferStalled(pb5, fileSize2, 5);
-```
-### Test Methods Referenced by Examples
-```csharp
-static async Task TestProgressBar(ConsoleProgressBar progress, int num)
-{
-    Console.Write($"{num}. Performing some task... ");
-    using (progress)
+    // 1. Default behavior
+    var pb1 = new ConsoleProgressBar();
+    await TestProgressBar(pb1, 1);
+
+    // 2. Customized all progress bar components
+    var pb2 = new ConsoleProgressBar
     {
-	for (var i = 0; i <= 150; i++)
-	{
-	    progress.Report((double)i / 150);
-	    await Task.Delay(20);
-	}
+	NumberOfBlocks = 18,
+	StartBracket = string.Empty,
+	EndBracket = string.Empty,
+	CompletedBlock = "\u2022",
+	IncompleteBlock = "·",
+	AnimationSequence = ProgressAnimations.RotatingPipe
+    };
+    await TestProgressBar(pb2, 2);
 
-	progress.Report(1);
-	await Task.Delay(200);
-    }
-
-    Console.WriteLine();
+    // 3. Hide progress bar
+    var pb3 = new ConsoleProgressBar
+    {
+	DisplayBar = false,
+	AnimationSequence = ProgressAnimations.RotatingTriangle
+    };
+    await TestProgressBar(pb3, 3);
 }
 ```
 ```csharp
-static async Task TestFileTransferProgressBar(FileTransferProgressBar progress, long fileSize, int num)
+static async Task FileTransferProgressBars()
 {
-    Console.Write($"{num}. File transfer in progress... ");
-    using (progress)
+    // 4. Customized progress bar, successful file transfer
+    const long fileSize = (long)(8 * FileHelper.OneKB);
+    var pb4 = new FileTransferProgressBar(fileSize, TimeSpan.FromSeconds(5))
     {
-	for (int i = 0; i <= 150; i++)
-	{
-	    progress.BytesReceived = i * (fileSize / 150);
-	    progress.Report((double)i / 150);
-	    await Task.Delay(20);
-	}
+	NumberOfBlocks = 15,
+	StartBracket = "|",
+	EndBracket = "|",
+	CompletedBlock = "|",
+	IncompleteBlock = "\u00a0",
+	AnimationSequence = ProgressAnimations.PulsingLine
+    };
+    await TestFileTransferProgressBar(pb4, fileSize, 4);
 
-	progress.BytesReceived = fileSize;
-	progress.Report(1);
-	await Task.Delay(200);
-    }
-
-    Console.WriteLine();
-}
-```
-```csharp
-static async Task TestFileTransferStalled(FileTransferProgressBar progress, long fileSize, int num)
-{
-    Console.Write($"{num}. File transfer in progress... ");
-    using (progress)
+    // 5. Hide progress bar and animation, unsuccessful file transfer
+    const long fileSize2 = (long)(100 * 36 * FileHelper.OneMB);
+    var pb5 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(5))
     {
-	for (int i = 0; i <= 110; i++)
-	{
-	    progress.BytesReceived = i * (fileSize / 1000);
-	    progress.Report((double)i / 1000);
-	    await Task.Delay(2);
-	}
-
-	await Task.Delay(6000);
-    }
-}
-```
-```csharp
-static void HandleFileTransferStalled(object sender, ProgressEventArgs eventArgs)
-{
-    var pb = (FileTransferProgressBar)sender;
-    pb.Dispose();
-
-    Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}File transfer stalled!");
-    Console.WriteLine($"{pb.TimeSpanFileStalled.Seconds} seconds elapsed since last data received");
+	DisplayBar = false,
+	DisplayAnimation = false
+    };
+    pb5.FileTransferStalled += HandleFileTransferStalled;
+    await TestFileTransferStalled(pb5, fileSize4, 5);
 }
 ```
