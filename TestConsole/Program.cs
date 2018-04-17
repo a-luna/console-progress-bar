@@ -53,7 +53,7 @@
                 for (var i = 0; i <= 150; i++)
                 {
                     progress.Report((double)i / 150);
-                    await Task.Delay(2);
+                    await Task.Delay(20);
                 }
 
                 progress.Report(1);
@@ -65,8 +65,8 @@
 
         static async Task FileTransferProgressBars()
         {
-            const long fileSize2 = (long)(100 * 81 * FileHelper.OneKB);
-			var pb2 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(10))
+            const long fileSize = (long)(8 * FileHelper.OneKB);
+			var pb4 = new FileTransferProgressBar(fileSize, TimeSpan.FromSeconds(5))
 			{
 				NumberOfBlocks = 15,
 				StartBracket = "|",
@@ -75,17 +75,16 @@
 				IncompleteBlock = "\u00a0",
                 AnimationSequence = ProgressAnimations.PulsingLine
 			};
-			await TestFileTransferProgressBar(pb2, fileSize2, 4);
+			await TestFileTransferProgressBar(pb4, fileSize, 4);
 
-            const long fileSize4 = (long)(100 * 36 * FileHelper.OneMB);
-			var pb4 = new FileTransferProgressBar(fileSize4, TimeSpan.FromSeconds(5))
+            const long fileSize2 = (long)(100 * 36 * FileHelper.OneMB);
+			var pb5 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(5))
 			{
 				DisplayBar = false,
                 DisplayAnimation = false
             };
-            pb4.FileTransferStalled += HandleFileTransferStalled;
-
-            await TestFileTransferStalled(pb4, fileSize4, 5);
+            pb5.FileTransferStalled += HandleFileTransferStalled;
+            await TestFileTransferStalled(pb5, fileSize2, 5);
         }
 
         static async Task TestFileTransferProgressBar(FileTransferProgressBar progress, long fileSize, int num)
@@ -97,7 +96,7 @@
                 {
                     progress.BytesReceived = i * (fileSize / 150);
                     progress.Report((double)i / 150);
-                    await Task.Delay(2);
+                    await Task.Delay(20);
                 }
 
                 progress.BytesReceived = fileSize;
