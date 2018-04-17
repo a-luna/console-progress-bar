@@ -60,11 +60,11 @@
                 if (elapsed < TimeSpanFileStalled) return;
 
                 FileTransferStalled?.Invoke(this,
-                    new ProgressEventArgs
-                    {
-                        LastDataReceived = new DateTime(_lastReportTicks),
-                        TimeOutTriggered = DateTime.Now
-                    });
+                new ProgressEventArgs
+                {
+		    LastDataReceived = new DateTime(_lastReportTicks),
+		    TimeOutTriggered = DateTime.Now
+	        });
             }
         }
 
