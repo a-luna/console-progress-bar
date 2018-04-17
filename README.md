@@ -1,5 +1,5 @@
 # Progress Bar for Console Applications (.NET Core 2.0)
-A simple way to represent the progress of a long-running job in a C# console app. Targets .NET Core 2.0.
+A simple way to represent the progress of a long-running task in a C# console app. Targets .NET Core 2.0.
 
 ## Features
 - **ConsoleProgressBar**
