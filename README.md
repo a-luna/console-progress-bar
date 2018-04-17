@@ -21,7 +21,7 @@ A simple way to represent the progress of a long-running job in a C# console app
 ![Progress Bar_Ubuntu](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ProgressBar_Ubuntu.gif)
   
 ## Usage
-### Numbers correspond to the examples shown above, full source code for examples can be found in ./TestConsole/Program.cs
+Numbers correspond to the examples shown above, full source code for examples can be found in ./TestConsole/Program.cs
 ```csharp
 static async Task ConsoleProgressBars()
 {
