@@ -66,21 +66,21 @@
         static async Task FileTransferProgressBars()
         {
             const long fileSize = (long)(8 * FileHelper.OneKB);
-			var pb4 = new FileTransferProgressBar(fileSize, TimeSpan.FromSeconds(5))
-			{
-				NumberOfBlocks = 15,
-				StartBracket = "|",
-				EndBracket = "|",
-				CompletedBlock = "|",
-				IncompleteBlock = "\u00a0",
+	    var pb4 = new FileTransferProgressBar(fileSize, TimeSpan.FromSeconds(5))
+	    {
+		NumberOfBlocks = 15,
+		StartBracket = "|",
+		EndBracket = "|",
+		CompletedBlock = "|",
+		IncompleteBlock = "\u00a0",
                 AnimationSequence = ProgressAnimations.PulsingLine
-			};
-			await TestFileTransferProgressBar(pb4, fileSize, 4);
+	    };
+	    await TestFileTransferProgressBar(pb4, fileSize, 4);
 
             const long fileSize2 = (long)(100 * 36 * FileHelper.OneMB);
-			var pb5 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(5))
-			{
-				DisplayBar = false,
+	    var pb5 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(5))
+	    {
+		DisplayBar = false,
                 DisplayAnimation = false
             };
             pb5.FileTransferStalled += HandleFileTransferStalled;
@@ -114,7 +114,7 @@
             {
                 for (int i = 0; i <= 110; i++)
                 {
-		            progress.BytesReceived = i * (fileSize / 1000);
+		    progress.BytesReceived = i * (fileSize / 1000);
                     progress.Report((double)i / 1000);
                     await Task.Delay(2);
                 }
@@ -125,11 +125,11 @@
 
         static void HandleFileTransferStalled(object sender, ProgressEventArgs eventArgs)
         {
-        	var pb = (FileTransferProgressBar)sender;
-        	pb.Dispose();
+	    var pb = (FileTransferProgressBar)sender;
+	    pb.Dispose();
 
-        	Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}File transfer stalled!");
-        	Console.WriteLine($"{pb.TimeSpanFileStalled.Seconds} seconds elapsed since last data received");
+	    Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}File transfer stalled!");
+	    Console.WriteLine($"{pb.TimeSpanFileStalled.Seconds} seconds elapsed since last data received");
         }
     }
 }
