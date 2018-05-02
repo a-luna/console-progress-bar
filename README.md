@@ -30,20 +30,20 @@ await TestProgressBar(pb1, 1);
 // 2. Customized all progress bar components
 var pb2 = new ConsoleProgressBar
 {
-NumberOfBlocks = 18,
-StartBracket = string.Empty,
-EndBracket = string.Empty,
-CompletedBlock = "\u2022",
-IncompleteBlock = "·",
-AnimationSequence = ProgressAnimations.RotatingPipe
+    NumberOfBlocks = 18,
+    StartBracket = string.Empty,
+    EndBracket = string.Empty,
+    CompletedBlock = "\u2022",
+    IncompleteBlock = "·",
+    AnimationSequence = ProgressAnimations.RotatingPipe
 };
 await TestProgressBar(pb2, 2);
 
 // 3. Hide progress bar
 var pb3 = new ConsoleProgressBar
 {
-DisplayBar = false,
-AnimationSequence = ProgressAnimations.RotatingTriangle
+    DisplayBar = false,
+    AnimationSequence = ProgressAnimations.RotatingTriangle
 };
 await TestProgressBar(pb3, 3);
 
@@ -51,12 +51,12 @@ await TestProgressBar(pb3, 3);
 const long fileSize = (long)(8 * FileHelper.OneKB);
 var pb4 = new FileTransferProgressBar(fileSize, TimeSpan.FromSeconds(5))
 {
-NumberOfBlocks = 15,
-StartBracket = "|",
-EndBracket = "|",
-CompletedBlock = "|",
-IncompleteBlock = "\u00a0",
-AnimationSequence = ProgressAnimations.PulsingLine
+    NumberOfBlocks = 15,
+    StartBracket = "|",
+    EndBracket = "|",
+    CompletedBlock = "|",
+    IncompleteBlock = "\u00a0",
+    AnimationSequence = ProgressAnimations.PulsingLine
 };
 await TestFileTransferProgressBar(pb4, fileSize, 4);
 
@@ -64,8 +64,8 @@ await TestFileTransferProgressBar(pb4, fileSize, 4);
 const long fileSize2 = (long)(100 * 36 * FileHelper.OneMB);
 var pb5 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(5))
 {
-DisplayBar = false,
-DisplayAnimation = false
+    DisplayBar = false,
+    DisplayAnimation = false
 };
 pb5.FileTransferStalled += HandleFileTransferStalled;
 await TestFileTransferStalled(pb5, fileSize4, 5);
