@@ -2,15 +2,15 @@
 A simple way to represent the progress of a long-running task in a C# console app. Targets .NET Core 2.0.
 
 ## Features
-- **ConsoleProgressBar**
-  - **Implements `IProgress<double>`** The `IProgress` interface greatly simplifies the effort to report progress from an `async` method to the UI, clunky boilerplate code to ensure thread-safety is not required since the `SynchronizationContext` is captured when the progress bar is instantiated.
-  - **Efficient and light-weight** `Console` can become sluggish and unresponsive when called frequently, this progress bar only performs 8 calls/second regardless of how often progress is reported.
-  - **Customizable** Each component of the progress bar (start/end brackets, completed/incomplete blocks, progress animation) can be set to any string value through public properties and each item displayed (the progress bar itself, percentage complete, animation) can be shown or hidden.
+* **ConsoleProgressBar**
+  * **Implements `IProgress<double>`** The `IProgress` interface greatly simplifies the effort to report progress from an `async` method to the UI, clunky boilerplate code to ensure thread-safety is not required since the `SynchronizationContext` is captured when the progress bar is instantiated.
+  * **Efficient and light-weight** `Console` can become sluggish and unresponsive when called frequently, this progress bar only performs 8 calls/second regardless of how often progress is reported.
+  * **Customizable** Each component of the progress bar (start/end brackets, completed/incomplete blocks, progress animation) can be set to any string value through public properties and each item displayed (the progress bar itself, percentage complete, animation) can be shown or hidden.
 
-- **FileTransferProgressBar**
-  - **Extends** ConsoleProgressBar and adds the ability to detect when a file transfer has stalled.
-  - If the time since last progress reported exceeds the `TimeSpanFileStalled` value, the `FileTransferStalled` event fires.
-  - **Provides further customization** of the display with the ability to show/hide the bytes received and file size in bytes
+* **FileTransferProgressBar**
+  * **Extends** ConsoleProgressBar and adds the ability to detect when a file transfer has stalled.
+  * If the time since last progress reported exceeds the `TimeSpanFileStalled` value, the `FileTransferStalled` event fires.
+  * **Provides further customization** of the display with the ability to show/hide the bytes received and file size in bytes
   
 ## Examples
 ### Windows
