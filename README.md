@@ -13,11 +13,14 @@ A simple way to represent the progress of a long-running task in a C# console ap
   * **Provides further customization** of the display with the ability to show/hide the bytes received and file size in bytes
   
 ## Examples
-### Windows
+* **Windows**
+
 ![Progress Bar_Win](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ProgressBar_Win.gif)
-### Mac (VS Code)
+* **Mac (VS Code)**
+
 ![Progress Bar_Mac](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ProgressBar_Mac.gif)
-### Ubuntu
+* **Ubuntu**
+
 ![Progress Bar_Ubuntu](https://s3-us-west-1.amazonaws.com/alunapublic/console_progress_bar/ProgressBar_Ubuntu.gif)
   
 ## Usage
@@ -68,5 +71,5 @@ var pb5 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(5))
     DisplayAnimation = false
 };
 pb5.FileTransferStalled += HandleFileTransferStalled;
-await TestFileTransferStalled(pb5, fileSize4, 5);
+await TestFileTransferStalled(pb5, fileSize2, 5);
 ```
