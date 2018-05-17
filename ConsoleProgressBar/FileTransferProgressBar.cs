@@ -95,7 +95,7 @@
             var animationFrame = AnimationSequence[AnimationIndex++ % AnimationSequence.Length];
             var animation = $"{animationFrame}";
 
-            if (!DisplayBar) 
+            if (!DisplayBar)
             {
                 progressBar = string.Empty;
             }
@@ -104,7 +104,7 @@
                 progressBar = progressBar + singleSpace;
             }
 
-            if (!DisplayPercentComplete) 
+            if (!DisplayPercentComplete)
             {
                 percent = string.Empty;
             }
@@ -113,7 +113,7 @@
                 percent = percent + singleSpace;
             }
 
-            if (!DisplayBytes) 
+            if (!DisplayBytes)
             {
                 bytes = string.Empty;
             }
@@ -122,7 +122,7 @@
                 bytes = bytes + singleSpace;
             }
 
-            if (!DisplayAnimation || currentProgress is 1) 
+            if (!DisplayAnimation || currentProgress is 1)
             {
                 animation = string.Empty;
             }

@@ -15,7 +15,7 @@
         public const string RotatingArrow = "\u2190\u2191\u2192\u2193";
         public const string PulsingLine = "\u2212\u003d\u2261\u039e\u2261\u003d\u2212";
         public const string Circles = "\u25cb\u263c\u00a4\u2219";
-        
+
         // These characters render correctly only on Mac
         public const string RotatingDot = "\u25dc\u25dd\u25de\u25df";
         public const string GrowingBarVertical = "\u2581\u2582\u2583\u2584\u2585\u2586\u2587\u2588\u2587\u2586\u2585\u2584\u2583\u2581";
