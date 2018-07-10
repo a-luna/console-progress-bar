@@ -96,7 +96,7 @@
             }
             else
             {
-                progressBar = progressBar + singleSpace;
+                progressBar += singleSpace;
             }
 
             if (!DisplayPercentComplete)
@@ -105,7 +105,7 @@
             }
             else
             {
-                percent = percent + singleSpace;
+                percent += singleSpace;
             }
 
             if (!DisplayAnimation || currentProgress is 1)
