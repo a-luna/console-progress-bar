@@ -1,20 +1,20 @@
-﻿namespace AaronLuna.ConsoleProgressBar
-{
-    using System;
-    using System.Linq;
-    using System.Text;
-    using System.Threading;
+﻿using System;
+using System.Linq;
+using System.Text;
+using System.Threading;
 
+namespace AaronLuna.ConsoleProgressBar
+{
     public class ConsoleProgressBar : IDisposable, IProgress<double>
     {
-        readonly TimeSpan _animationInterval = TimeSpan.FromSeconds(1.0 / 8);
+        private readonly TimeSpan _animationInterval = TimeSpan.FromSeconds(1.0 / 8);
 
-	internal Timer Timer;
-	internal double CurrentProgress;
+        private string _currentText = string.Empty;
+        internal int AnimationIndex;
+        internal double CurrentProgress;
         internal bool Disposed;
-	internal int AnimationIndex;
 
-	string _currentText = string.Empty;
+        internal Timer Timer;
 
         public ConsoleProgressBar()
         {
@@ -31,15 +31,12 @@
             DisplayPercentComplete = true;
             DisplayAnimation = true;
 
-	    Timer = new Timer(TimerHandler);
+            Timer = new Timer(TimerHandler);
 
             // A progress bar is only for temporary display in a console window.
             // If the console output is redirected to a file, draw nothing.
             // Otherwise, we'll end up with a lot of garbage in the target file.
-            if (!Console.IsOutputRedirected)
-            {
-                ResetTimer();
-            }
+            if (!Console.IsOutputRedirected) ResetTimer();
         }
 
         public int NumberOfBlocks { get; set; }
@@ -52,14 +49,20 @@
         public bool DisplayPercentComplete { get; set; }
         public bool DisplayAnimation { get; set; }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         public void Report(double value)
         {
-	    // Make sure value is in [0..1] range
+            // Make sure value is in [0..1] range
             value = Math.Max(0, Math.Min(1, value));
             Interlocked.Exchange(ref CurrentProgress, value);
         }
 
-        void TimerHandler(object state)
+        private void TimerHandler(object state)
         {
             lock (Timer)
             {
@@ -69,11 +72,11 @@
             }
         }
 
-        string GetProgressBarText(double currentProgress)
+        private string GetProgressBarText(double currentProgress)
         {
             const string singleSpace = " ";
 
-            var numBlocksCompleted = (int)(currentProgress * NumberOfBlocks);
+            var numBlocksCompleted = (int) (currentProgress * NumberOfBlocks);
 
             var completedBlocks =
                 Enumerable.Range(0, numBlocksCompleted).Aggregate(
@@ -91,27 +94,16 @@
             var animation = $"{animationFrame}";
 
             if (!DisplayBar)
-            {
                 progressBar = string.Empty;
-            }
             else
-            {
                 progressBar += singleSpace;
-            }
 
             if (!DisplayPercentComplete)
-            {
                 percent = string.Empty;
-            }
             else
-            {
                 percent += singleSpace;
-            }
 
-            if (!DisplayAnimation || currentProgress is 1)
-            {
-                animation = string.Empty;
-            }
+            if (!DisplayAnimation || currentProgress is 1) animation = string.Empty;
 
             return (progressBar + percent + animation).TrimEnd();
         }
@@ -122,9 +114,7 @@
             var commonPrefixLength = 0;
             var commonLength = Math.Min(_currentText.Length, text.Length);
             while (commonPrefixLength < commonLength && text[commonPrefixLength] == _currentText[commonPrefixLength])
-            {
                 commonPrefixLength++;
-            }
 
             // Backtrack to the first differing character
             var outputBuilder = new StringBuilder();
@@ -159,12 +149,6 @@
             {
                 Disposed = true;
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }
