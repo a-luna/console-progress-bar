@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading;
-
-namespace AaronLuna.ConsoleProgressBar
+﻿namespace AaronLuna.ConsoleProgressBar
 {
+    using System;
+    using System.Linq;
+    using System.Text;
+    using System.Threading;
+
     public class ConsoleProgressBar : IDisposable, IProgress<double>
     {
         private readonly TimeSpan _animationInterval = TimeSpan.FromSeconds(1.0 / 8);
@@ -93,17 +93,18 @@ namespace AaronLuna.ConsoleProgressBar
             var animationFrame = AnimationSequence[AnimationIndex++ % AnimationSequence.Length];
             var animation = $"{animationFrame}";
 
-            if (!DisplayBar)
-                progressBar = string.Empty;
-            else
-                progressBar += singleSpace;
+            progressBar = DisplayBar
+                ? progressBar + singleSpace
+                : string.Empty;
 
-            if (!DisplayPercentComplete)
-                percent = string.Empty;
-            else
-                percent += singleSpace;
+            percent = DisplayPercentComplete
+                ? percent + singleSpace
+                : string.Empty;
 
-            if (!DisplayAnimation || currentProgress is 1) animation = string.Empty;
+            if (!DisplayAnimation || currentProgress is 1)
+            {
+                animation = string.Empty;
+            }
 
             return (progressBar + percent + animation).TrimEnd();
         }
