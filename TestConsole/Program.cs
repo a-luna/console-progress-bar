@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AaronLuna.Common.IO;
 using AaronLuna.ConsoleProgressBar;
 
 namespace TestConsole
@@ -64,7 +63,7 @@ namespace TestConsole
 
         private static async Task FileTransferProgressBars()
         {
-            const long fileSize = (long) (8 * FileHelper.OneKB);
+            const long fileSize = (long) (8 * 1024);
             var pb4 = new FileTransferProgressBar(fileSize, TimeSpan.FromSeconds(5))
             {
                 NumberOfBlocks = 15,
@@ -76,7 +75,7 @@ namespace TestConsole
             };
             await TestFileTransferProgressBar(pb4, fileSize, 4);
 
-            const long fileSize2 = (long) (100 * 36 * FileHelper.OneMB);
+            const long fileSize2 = (long) (100 * 36 * 1048576L);
             var pb5 = new FileTransferProgressBar(fileSize2, TimeSpan.FromSeconds(5))
             {
                 DisplayBar = false,
