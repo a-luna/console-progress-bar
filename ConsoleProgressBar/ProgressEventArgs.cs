@@ -1,7 +1,7 @@
-﻿namespace AaronLuna.ConsoleProgressBar
-{
-    using System;
+﻿using System;
 
+namespace AaronLuna.ConsoleProgressBar
+{
     public class ProgressEventArgs : EventArgs
     {
         public ProgressEventArgs()

@@ -1,20 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>ConsoleProgressBar</AssemblyName>
+    <PackageId>AaronLuna.ConsoleProgressBar</PackageId>
+    <Description>Console progress bar</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <Copyright>Copyright 2019 (c)Aaron Luna. All rights reserved.</Copyright>
+    <PackageTags>Console Progress netcore csharp file-transfer cross-platform</PackageTags>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <RootNamespace>AaronLuna.ConsoleProgressBar</RootNamespace>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Class1.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="ConsoleProgressBar.dt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="AaronLuna.Common">
-      <HintPath>..\ExternalReferences\AaronLuna.Common.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 </Project>

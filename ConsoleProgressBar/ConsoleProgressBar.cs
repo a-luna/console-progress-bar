@@ -1,10 +1,10 @@
-﻿namespace AaronLuna.ConsoleProgressBar
-{
-    using System;
-    using System.Linq;
-    using System.Text;
-    using System.Threading;
+﻿using System;
+using System.Linq;
+using System.Text;
+using System.Threading;
 
+namespace AaronLuna.ConsoleProgressBar
+{
     public class ConsoleProgressBar : IDisposable, IProgress<double>
     {
         private readonly TimeSpan _animationInterval = TimeSpan.FromSeconds(1.0 / 8);
@@ -88,9 +88,11 @@
                     string.Empty,
                     (current, _) => current + IncompleteBlock);
 
-            var progressBar = $"{StartBracket}{completedBlocks}{incompleteBlocks}{EndBracket}";
+            var progressBar =
+                $"{StartBracket}{completedBlocks}{incompleteBlocks}{EndBracket}";
             var percent = $"{currentProgress:P0}".PadLeft(4, '\u00a0');
-            var animationFrame = AnimationSequence[AnimationIndex++ % AnimationSequence.Length];
+            var animationFrame =
+                AnimationSequence[AnimationIndex++ % AnimationSequence.Length];
             var animation = $"{animationFrame}";
 
             progressBar = DisplayBar
@@ -114,7 +116,8 @@
             // Get length of common portion
             var commonPrefixLength = 0;
             var commonLength = Math.Min(_currentText.Length, text.Length);
-            while (commonPrefixLength < commonLength && text[commonPrefixLength] == _currentText[commonPrefixLength])
+            while (commonPrefixLength < commonLength && text[commonPrefixLength] ==
+                   _currentText[commonPrefixLength])
                 commonPrefixLength++;
 
             // Backtrack to the first differing character

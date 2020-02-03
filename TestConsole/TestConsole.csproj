@@ -14,9 +14,4 @@
   <ItemGroup>
     <ProjectReference Include="..\ConsoleProgressBar\AaronLuna.ConsoleProgressBar.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="AaronLuna.Common">
-      <HintPath>..\ExternalReferences\AaronLuna.Common.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 </Project>
